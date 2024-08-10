@@ -2,6 +2,7 @@ package com.hastycode.ecom.controller;
 
 import com.hastycode.ecom.model.Product;
 import com.hastycode.ecom.service.ProductService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -82,6 +83,13 @@ public class ProductController {
             return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
         } else
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProduct(@RequestParam String keyword) {
+        List<Product> products = service.searchProducts(keyword);
+        System.out.println("Searching "+keyword);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 }
